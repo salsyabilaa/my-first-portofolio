@@ -5,15 +5,28 @@ import Chevron from './down-chevron.png';
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = { matches: window.matchMedia("(min-width: 648px)").matches };
+    this.state = { matches: window.matchMedia("(min-width: 648px)").matches, 
+    email: ''
+  };
   }
 
   componentDidMount() {
     const handler = e => this.setState({matches: e.matches});
     window.matchMedia("(min-width: 648px)").addListener(handler);
   }
+
+  onChangeText = (e) => {
+    this.setState({
+      email: e.target.value
+    })
+
+  }
+
+  onBottonPress = () =>{
+    alert(`Anda telah terdaftar sebagai ${this.state.email}`)
+  }
   render(){
-    const {matches} = this.state
+    const {matches,email} = this.state
     return(
       <div style={styles.background}>
       <div style={styles.overlay}>
@@ -25,9 +38,9 @@ class App extends Component {
           
           <div style={styles.wrapperInput}>
           <div style={styles.bgInput}>
-            <input type="text" name="name" placeholder= "Enter your email" style={matches ? styles.input : styles.input2 } />
+            <input onChange={(e) => this.onChangeText(e)} value={email} type="text" name="name" placeholder= "Enter your email" style={matches ? styles.input : styles.input2 } />
       </div>
-      <div onClick={() => alert('Clicked')} style={styles.button}>
+      <div onClick={this.onBottonPress} style={styles.button}>
         submit
       </div>
     </div>
